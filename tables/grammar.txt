@@ -1,0 +1,14 @@
+<expr> ::= <expr> "+" <term>
+	|  <expr> "-" <term>
+	|  <term>
+
+<term> ::= <term> "*" <factor>
+	|  <term> "/" <factor>
+	|  <term> "%" <factor>
+	|  <factor>
+
+<factor> ::= <factor> "^" <exponent>
+	  |  <exponent>
+
+<exponent> ::= "(" <expr> ")"
+	    |  num        

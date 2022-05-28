@@ -1,0 +1,2 @@
+I wrote several calculators (as you've seen in this repo), in order to get deeper understanding of parsing techniques such as LL, LR and recursive descent.  
+The parsers themselves are written by C++, and the algorithms of building parse tables or inducing LR items are written in Python, since I want calculators to be fast and said algorithms appear like persudocode.

@@ -1,4 +1,5 @@
 from copy import deepcopy
+from this import d
 from bnf import *
 
 
@@ -91,8 +92,8 @@ def goto(items: LRState, symbol: str, nts: NonTerminals):
     return None
 
 
-def getItems0(init: LRState, nts: NonTerminals):
-    transfer = dict()
+def getStates(init: LRState, nts: NonTerminals, startSymbol: str):
+    transition = dict()
     statenumber = 1
 
     closure(init, nts)
@@ -109,14 +110,16 @@ def getItems0(init: LRState, nts: NonTerminals):
                 newstate = goto(C[i], symbol, nts)
                 if newstate and (newstate not in C):
                     newstate.name = statenumber
-                    transfer[(C[i].name, symbol)] = statenumber
+                    transition[(C[i].name, symbol)] = statenumber
                     statenumber += 1
                     C.append(newstate)
                 elif newstate and newstate in C:
                     index = C.index(newstate)
-                    transfer[(C[i].name, symbol)] = C[index].name
+                    transition[(C[i].name, symbol)] = C[index].name
 
-    return C, transfer
+    beforeAccept = transition[(0, startSymbol)]
+    transition[(beforeAccept, 'eof')] = 'Accept!' # Here -1 means accept state
+    return C, transition
 
 
 if __name__ == '__main__':
@@ -124,9 +127,9 @@ if __name__ == '__main__':
     
     init = LRState()
     init += Item0('<S\'>', ['<S>',], 0)
-    c, transfer = getItems0(init, nts)
+    c, transition = getStates(init, nts, '<S>')
     
     for state in c:
         print(state)
-    for (key, value) in transfer.items():
+    for (key, value) in transition.items():
         print(key, ':', value, sep=' ')

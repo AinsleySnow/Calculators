@@ -1,5 +1,4 @@
 from copy import deepcopy
-from this import d
 from bnf import *
 
 
@@ -33,6 +32,10 @@ class Item0:
         if self._pos < len(self._rule):
             return self._rule[self._pos]
         return None
+
+    @property
+    def name(self):
+        return self._name
 
 
 class LRState:
@@ -118,7 +121,7 @@ def getStates(init: LRState, nts: NonTerminals, startSymbol: str):
                     transition[(C[i].name, symbol)] = C[index].name
 
     beforeAccept = transition[(0, startSymbol)]
-    transition[(beforeAccept, 'eof')] = 'Accept!' # Here -1 means accept state
+    transition[(beforeAccept, 'eof')] = 'Accept!'
     return C, transition
 
 

@@ -57,7 +57,8 @@ def FollowSet(nts: NonTerminals, first: dict, startsymbol: str) -> dict:
     follow = dict()
     for (name, rules) in nts:
         follow[name] = set()
-    follow[startsymbol].add('eof')
+    if startsymbol:
+        follow[startsymbol].add('eof')
 
     changing = makechanging()
 

@@ -40,8 +40,16 @@ class Item0:
 
 class LRState:
     def __init__(self) -> None:
-        self.name = 0
+        self.__name = 0
         self.__items = []
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, value):
+        self.__name = value
 
     def __iter__(self):
         return (item for item in self.__items)
@@ -70,7 +78,7 @@ class LRState:
         return self.__items == __o.__items
 
 
-def closure(items: LRState, nts: NonTerminals):
+def closureLR0(items: LRState, nts: NonTerminals):
     old = 0
 
     while len(items) != old:
@@ -82,7 +90,7 @@ def closure(items: LRState, nts: NonTerminals):
                     items += Item0(name, rule, 0)
 
 
-def goto(items: LRState, symbol: str, nts: NonTerminals):
+def goto(items: LRState, symbol: str, nts: NonTerminals, findclosure):
     gotoset = LRState()
     for item in items:
         name = item.Where()
@@ -90,16 +98,16 @@ def goto(items: LRState, symbol: str, nts: NonTerminals):
             gotoset += item.Move()
         
     if len(gotoset) != 0:
-        closure(gotoset, nts)
+        findclosure(gotoset, nts)
         return gotoset
     return None
 
 
-def getStates(init: LRState, nts: NonTerminals, startSymbol: str):
+def getStates(init: LRState, nts: NonTerminals, startSymbol: str, findclosure):
     transition = dict()
     statenumber = 1
 
-    closure(init, nts)
+    findclosure(init, nts)
     C = [init,]
     symbols = nts.GetName()
     symbols.extend(nts.GetTermName())
@@ -110,7 +118,7 @@ def getStates(init: LRState, nts: NonTerminals, startSymbol: str):
 
         for i in range(old):
             for symbol in symbols:
-                newstate = goto(C[i], symbol, nts)
+                newstate = goto(C[i], symbol, nts, findclosure)
                 if newstate and (newstate not in C):
                     newstate.name = statenumber
                     transition[(C[i].name, symbol)] = statenumber
@@ -120,8 +128,8 @@ def getStates(init: LRState, nts: NonTerminals, startSymbol: str):
                     index = C.index(newstate)
                     transition[(C[i].name, symbol)] = C[index].name
 
-    beforeAccept = transition[(0, startSymbol)]
-    transition[(beforeAccept, 'eof')] = 'Accept!'
+    stateBeforeAccept = transition[(0, startSymbol)]
+    transition[(stateBeforeAccept, 'eof')] = 'Accept!'
     return C, transition
 
 
@@ -130,7 +138,7 @@ if __name__ == '__main__':
     
     init = LRState()
     init += Item0('<S\'>', ['<S>',], 0)
-    c, transition = getStates(init, nts, '<S>')
+    c, transition = getStates(init, nts, '<S>', closureLR0)
     
     for state in c:
         print(state)

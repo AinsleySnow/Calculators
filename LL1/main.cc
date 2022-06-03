@@ -19,11 +19,11 @@ int main(int argc, char* argv[])
 
                 Parser p;
                 p.SetLine(line);
-                printf("a\n");
                 std::shared_ptr<Node> e = p.Parse();
-                printf("b\n");
+
                 double result = e->Yield();
                 printf(">> %lf\n", result);
+                printf("%s\n", e->ToString().c_str());
             }
         }
 
@@ -38,6 +38,7 @@ int main(int argc, char* argv[])
 
             double result = e->Yield();
             printf(">> %lf\n", result);
+            printf("%s\n", e->ToString().c_str());
         }
     }
     catch (int e)

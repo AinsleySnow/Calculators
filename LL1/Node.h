@@ -25,6 +25,7 @@ public:
     void SetRight(std::shared_ptr<Node>);
 
     double Yield();
+    std::string ToString();
 };
 
 #endif // _NODE_H_

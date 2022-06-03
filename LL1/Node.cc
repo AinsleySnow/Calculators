@@ -73,5 +73,11 @@ double Node::Yield()
     }
     else
         return t.field.num;
-    
+}
+
+std::string Node::ToString()
+{
+    if (!left || !right)
+        return std::to_string(t.field.num);
+    return '(' + left->ToString() + ' ' + t.field.op + ' ' + right->ToString() + ')';
 }

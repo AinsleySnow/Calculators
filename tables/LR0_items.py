@@ -103,7 +103,7 @@ def goto(items: LRState, symbol: str, nts: NonTerminals, findclosure):
     return None
 
 
-def getStates(init: LRState, nts: NonTerminals, startSymbol: str, findclosure):
+def GetStates(init: LRState, nts: NonTerminals, startSymbol: str, findclosure):
     transition = dict()
     statenumber = 1
 
@@ -138,7 +138,7 @@ if __name__ == '__main__':
     
     init = LRState()
     init += Item0('<S\'>', ['<S>',], 0)
-    c, transition = getStates(init, nts, '<S>', closureLR0)
+    c, transition = GetStates(init, nts, '<S>', closureLR0)
     
     for state in c:
         print(state)

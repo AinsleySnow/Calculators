@@ -1,6 +1,4 @@
-from LR0_items import *
-from bnf import *
-from sets import *
+from LR1_items import *
 
 
 if __name__ == '__main__':
@@ -8,14 +6,11 @@ if __name__ == '__main__':
     augmentedSymbol = '<S\'>'
 
     init = LRState()
-    init += Item0(augmentedSymbol, ['<S>',], 0)
-    C, transition = GetStates(init, nts, '<S>')
+    init += Item1('<S\'>', ['<S>',], 0, 'eof')
+    C, transition = GetStates(init, nts, '<S>', closureLR1)
 
     actionTable = dict()
     gotoTable = dict()
-
-    first = FirstSet(nts, nts.GetTermName())
-    follow = FollowSet(nts, first, None)
 
     for state in C:
         name = state.name
@@ -25,8 +20,7 @@ if __name__ == '__main__':
             else:
                 next2Dot = item.Where()
                 if not next2Dot:
-                    for symbol in follow[item.name]:
-                        actionTable[(name, symbol)] = "reduce " + str(item)
+                    actionTable[(name, item.lookahead)] = "reduce " + str(item)
                 elif next2Dot and next2Dot[0] != '<':
                     to = transition[(name, next2Dot)]
                     actionTable[(name, next2Dot)] = "shift " + str(to)

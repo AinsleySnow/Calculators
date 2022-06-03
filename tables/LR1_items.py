@@ -61,7 +61,7 @@ if __name__ == '__main__':
     
     init = LRState()
     init += Item1('<S\'>', ['<S>',], 0, 'eof')
-    c, transition = getStates(init, nts, '<S>', closureLR1)
+    c, transition = GetStates(init, nts, '<S>', closureLR1)
     
     for state in c:
         print(state)

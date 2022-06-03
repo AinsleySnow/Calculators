@@ -4,11 +4,28 @@ D = descent
 U = utilities
 L = LL1
 
-desc: 
-	$(CC) $(CFLAGS) $D/Lexer.cc $D/Paser.cc $D/main.cc
+desc: lex
+	$(CC) $(CFLAGS) $U/lex.o $D/Paser.cc $D/main.cc -o $D/descent
 
-ll:
-	$(CC) $(CFLAGS) -I. $L/Node.cc $U/Lexer.cc $L/main.cc $L/Parser.cc
+ll: lex
+	$(CC) $(CFLAGS) -I. $U/lex.o $L/Node.cc $L/main.cc $L/Parser.cc -o $L/LL1
+
+lex: 
+	$(CC) $(CFLAGS) $U/Lexer.cc -c -o $U/lex.o
+
+LL1_table:
+	cd tables;\
+	python3.9 LL1_table.py;
+
+SLR:
+	cd tables;\
+	python3.9 SLR.py;
+
+LR1_table:
+	cd tables;\
+	python3.9 LR1_table.py;
 
 clean: 
 	rm -f $D/descent
+	rm -f $U/lex.o
+	rm -f $L/LL1

@@ -1,2 +1,10 @@
 I wrote several calculators (as you've seen in this repo), in order to get deeper understanding of parsing techniques such as LL, LR and recursive descent.  
-The parsers themselves are written by C++, and the algorithms of building parse tables or inducing LR items are written in Python, since I want calculators to be fast and said algorithms appear like persudocode.
+The parsers themselves are written by C++, and the algorithms of building parse tables and inducing LR items are written in Python, since I want calculators to be fast and said algorithms appear like persudocode.  
+  
+In folder "tables" there are algorithms of building LL(1) table and LR table and other algorithms related to them, like algorithms of finding first set and of eliminating left recursions. I tried my best to make critial parts appear like persudocode described in textbooks such as *Dragon Book* and *EAC2*.  
+  
+In folder "descent" a simple recursive-descent parser is made. It is based on the corresponding part of the front end described in appendix A of *Dragon Book*, with lots of simplifications made. The simple lexical analyser in folder "utilities" is based on the front end too.  
+  
+LL1 folder contains a not very successful LL(1)-based calculator, since it does parse input lines as expected but in most cases it produces wrong result. I'm still working to figure the problem out.  
+  
+I will still create commits in this repository in the next few weeks so if you have cloned it you can "git fetch" now and then to see my recent progress.

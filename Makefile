@@ -4,13 +4,13 @@ D = descent
 U = utilities
 L = LL1
 
-desc: lex
+desc: $U/lex.o
 	$(CC) $(CFLAGS) $U/lex.o $D/Paser.cc $D/main.cc -o $D/descent
 
-ll: lex
+ll: $U/lex.o
 	$(CC) $(CFLAGS) -I. $U/lex.o $L/Node.cc $L/main.cc $L/Parser.cc -o $L/LL1
 
-lex: 
+$U/lex.o: 
 	$(CC) $(CFLAGS) $U/Lexer.cc -c -o $U/lex.o
 
 LL1_table:

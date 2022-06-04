@@ -18,7 +18,6 @@ public:
     Node(const Token&, std::shared_ptr<Node>, std::shared_ptr<Node>);
 
     const Token& GetToken();
-    void SetToken();
     std::shared_ptr<Node> GetLeft();
     std::shared_ptr<Node> GetRight();
     void SetLeft(std::shared_ptr<Node>);

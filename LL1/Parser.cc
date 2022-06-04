@@ -23,7 +23,24 @@ std::shared_ptr<Node> Parser::Parse()
                 if (token.type == Tag::num)
                     nodes.push(std::make_shared<Node>(token));
                 else if (token.type != Tag::op)
+                {
+                    if (!op.empty() && op.top().type == token.type)
+                    {
+                        Token t = op.top();
+                        op.pop();
+                        std::shared_ptr<Node> right = nodes.top();
+                        nodes.pop();
+                        std::shared_ptr<Node> left = nodes.top();
+                        nodes.pop();
+                        nodes.push(std::make_shared<Node>(t, left, right));
+                    }
                     op.push(token);
+                }
+                else if (token.type == Tag::op && token.field.op == '(')
+                    op.push(token);
+                else if (token.type == Tag::op && token.field.op == ')')
+                    op.pop();
+                
                 token = lexer.NextToken();
             }
             else
@@ -48,10 +65,10 @@ std::shared_ptr<Node> Parser::Parse()
                         nodes.push(std::make_shared<Node>(t, left, right));
                     }
                 }
-                else
-                    for (int i = grammars[rule][0]; i >= 2; --i)
-                        if (grammars[rule][i] != _epsilon)
-                            stack.push(grammars[rule][i]);
+                
+                for (int i = grammars[rule][0]; i >= 2; --i)
+                    if (grammars[rule][i] != _epsilon)
+                        stack.push(grammars[rule][i]);
             }
             else
                 throw 4;

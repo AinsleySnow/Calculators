@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 
                 double result = e->Yield();
                 printf(">> %lf\n", result);
-                printf("%s\n", e->ToString().c_str());
+                printf("syntax tree: %s\n", e->ToString().c_str());
             }
         }
 
@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 
             double result = e->Yield();
             printf(">> %lf\n", result);
-            printf("%s\n", e->ToString().c_str());
+            printf("syntax tree: %s\n", e->ToString().c_str());
         }
     }
     catch (int e)

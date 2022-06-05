@@ -9,7 +9,7 @@ if __name__ == '__main__':
 
     init = LRState()
     init += Item0(augmentedSymbol, ['<S>',], 0)
-    C, transition = GetStates(init, nts, '<S>')
+    C, transition = GetStates(init, nts, '<S>', closureLR0)
 
     actionTable = dict()
     gotoTable = dict()

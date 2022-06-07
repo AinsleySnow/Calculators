@@ -11,6 +11,8 @@ class Item1(Item0):
         return ''.join([super().__str__(), ', ', self.__lookahead])
         
     def __eq__(self, __o: object) -> bool:
+        if not isinstance(__o, Item1):
+            return False
         return super().__eq__(__o) and self.__lookahead == __o.lookahead
 
     @property

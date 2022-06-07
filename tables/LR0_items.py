@@ -19,6 +19,8 @@ class Item0:
         return ''.join(s)
 
     def __eq__(self, __o: object) -> bool:
+        if not isinstance(__o, Item0):
+            return False
         return __o._name == self._name and __o._rule == self._rule and __o._pos == self._pos
 
     def Move(self):
@@ -75,6 +77,8 @@ class LRState:
         return ''.join(s)
     
     def __eq__(self, __o: object) -> bool:
+        if not isinstance(__o, LRState):
+            return False
         return self.__items == __o.__items
 
 

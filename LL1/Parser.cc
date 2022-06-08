@@ -122,6 +122,10 @@ bool Parser::Matches(int terminal, const Token& t)
 
 int Parser::Convert(const Token& t)
 {
+    if (t.type == Tag::num)
+        return _num;
+    if (t.type == Tag::null)
+        return _eof;
     if (t.field.op == '+')
         return _plus;
     if (t.field.op == '-')
@@ -138,10 +142,6 @@ int Parser::Convert(const Token& t)
         return _leftpar;
     if (t.field.op == ')')
         return _rightpar;
-    if (t.type == Tag::num)
-        return _num;
-    if (t.type == Tag::null)
-        return _eof;
         
     return -1;
 }

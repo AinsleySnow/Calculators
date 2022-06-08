@@ -8,7 +8,7 @@ desc: $U/lex.o
 	$(CC) $(CFLAGS) $U/lex.o $D/Paser.cc $D/main.cc -o $D/descent
 
 ll: $U/lex.o
-	$(CC) $(CFLAGS) -I. $U/lex.o $L/Node.cc $L/main.cc $L/Parser.cc -o $L/LL1
+	$(CC) $(CFLAGS) -I. $U/lex.o $U/Node.cc $L/main.cc $L/Parser.cc -o $L/LL1
 
 $U/lex.o: 
 	$(CC) $(CFLAGS) $U/Lexer.cc -c -o $U/lex.o

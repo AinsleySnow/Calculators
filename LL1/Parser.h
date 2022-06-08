@@ -5,7 +5,7 @@
 #include "utilities/Lexer.h"
 #include "utilities/Token.h"
 #include "grammar.h"
-#include "Node.h"
+#include "utilities/Node.h"
 
 class Parser
 {

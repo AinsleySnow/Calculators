@@ -8,14 +8,20 @@ LR = LRx
 desc: $U/lex.o
 	$(CC) $(CFLAGS) $U/lex.o $D/Paser.cc $D/main.cc -o $D/descent
 
-ll: $U/lex.o
-	$(CC) $(CFLAGS) -I. $U/lex.o $U/Node.cc $L/main.cc $L/Parser.cc -o $L/LL1
+ll: $U/lex.o $U/Node.o
+	$(CC) $(CFLAGS) -I. $U/lex.o $U/Node.o $L/main.cc $L/Parser.cc -o $L/LL1
 
-slr: $U/lex.o
-	$(CC) $(CFLAGS) -I. $U/lex.o $U/Node.cc $(LR)/SLRTable.cc $(LR)/main.cc $(LR)/Parser.cc -o $(LR)/SLR
+slr: $U/lex.o $U/Node.o
+	$(CC) $(CFLAGS) -D SLR -I. $U/lex.o $U/Node.o $(LR)/SLRTable.cc $(LR)/main.cc $(LR)/Parser.cc -o $(LR)/SLR
+
+lr1: $U/lex.o $U/Node.o
+	$(CC) $(CFLAGS) -D LR1 -I. $U/lex.o $U/Node.o $(LR)/LR1Table.cc $(LR)/main.cc $(LR)/Parser.cc -o $(LR)/LR1
 
 $U/lex.o: 
 	$(CC) $(CFLAGS) $U/Lexer.cc -c -o $U/lex.o
+
+$U/Node.o:
+	$(CC) $(CFLAGS) -I. $U/Node.cc -c -o $U/Node.o
 
 LL1_table:
 	cd tables;\

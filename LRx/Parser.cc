@@ -2,6 +2,17 @@
 #include "Table.h"
 #include <stack>
 
+#ifdef SLR
+#define actionTable SLRActionTable
+#define gotoTable SLRGotoTable
+#elif LR1
+#define actionTable LR1ActionTable
+#define gotoTable LR1GotoTable
+#elif LALR
+#define actionTable LALRActionTable
+#define gotoTable LALRGotoTable
+#endif
+
 static int lengthOfRule[11] = {
     3, 3, 1, // expr
     3, 3, 3, 1, // term
@@ -21,7 +32,7 @@ std::shared_ptr<Node> Parser::Parse()
     {
         const int top = states.top();
         int indexOfToken = Convert(token);
-        int action = SLRActionTable[top][indexOfToken];
+        int action = actionTable[top][indexOfToken];
         // printf("indexoftoken = %d, action = %d, top = %d\n", indexOfToken, action, top);
         if (action > 0 && action < 256) // shift to some state
         {
@@ -41,34 +52,34 @@ std::shared_ptr<Node> Parser::Parse()
             switch (indexOfRule)
             {
             case 0: case 1:
-                states.push(SLRGotoTable[states.top()][_expr]);
+                states.push(gotoTable[states.top()][_expr]);
                 nodes.push(MakeNode(op, nodes));
                 break;
             case 2:
-                states.push(SLRGotoTable[states.top()][_expr]);
+                states.push(gotoTable[states.top()][_expr]);
                 break;
             
             case 3: case 4: case 5:
-                states.push(SLRGotoTable[states.top()][_term]);
+                states.push(gotoTable[states.top()][_term]);
                 nodes.push(MakeNode(op, nodes));
                 break;
             case 6:
-                states.push(SLRGotoTable[states.top()][_term]);
+                states.push(gotoTable[states.top()][_term]);
                 break;
             
             case 7:
-                states.push(SLRGotoTable[states.top()][_factor]);
+                states.push(gotoTable[states.top()][_factor]);
                 nodes.push(MakeNode(op, nodes));
                 break;
             case 8:
-                states.push(SLRGotoTable[states.top()][_factor]);
+                states.push(gotoTable[states.top()][_factor]);
                 break;
             
             case 9:
-                states.push(SLRGotoTable[states.top()][_exponent]);
+                states.push(gotoTable[states.top()][_exponent]);
                 break;
             case 10:
-                states.push(SLRGotoTable[states.top()][_exponent]);
+                states.push(gotoTable[states.top()][_exponent]);
                 break;
             } 
         }

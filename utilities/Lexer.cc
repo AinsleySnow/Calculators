@@ -3,6 +3,8 @@
 void Lexer::SetLine(std::string& s)
 {
     line = s;
+    pos = 0;
+    c = 0;
 }
 
 Token Lexer::NextToken()

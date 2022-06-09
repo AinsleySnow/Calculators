@@ -11,9 +11,11 @@ class Item1(Item0):
         return ''.join([super().__str__(), ', ', self.__lookahead])
         
     def __eq__(self, __o: object) -> bool:
-        if not isinstance(__o, Item1):
-            return False
-        return super().__eq__(__o) and self.__lookahead == __o.lookahead
+        if isinstance(__o, Item1):
+            return super().__eq__(__o) and self.__lookahead == __o.lookahead
+        elif isinstance(__o, Item0):
+            return super().__eq__(__o) 
+        return False
 
     @property
     def lookahead(self):
@@ -59,11 +61,11 @@ def closureLR1(items: LRState, nts: NonTerminals):
 
 
 if __name__ == '__main__':
-    nts = ParseBNF('simplegrammar.txt').Build()
+    nts = ParseBNF('grammar.txt').Build()
     
     init = LRState()
-    init += Item1('<S\'>', ['<S>',], 0, 'eof')
-    c, transition = GetStates(init, nts, '<S>', closureLR1)
+    init += Item1('<expr\'>', ['<expr>',], 0, 'eof')
+    c, transition = GetStates(init, nts, '<expr>', closureLR1)
     
     for state in c:
         print(state)

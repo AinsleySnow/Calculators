@@ -12,7 +12,6 @@ class Parser
 private:
     Lexer lexer;
     Token current;
-    std::string line;
 
     int Convert(const Token& t);
     std::shared_ptr<Node> MakeNode(std::stack<Token>&, std::stack<std::shared_ptr<Node>>&);

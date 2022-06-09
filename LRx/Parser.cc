@@ -22,21 +22,23 @@ std::shared_ptr<Node> Parser::Parse()
         const int top = states.top();
         int indexOfToken = Convert(token);
         int action = SLRActionTable[top][indexOfToken];
-        if (action > 255) // shift to some state
+        // printf("indexoftoken = %d, action = %d, top = %d\n", indexOfToken, action, top);
+        if (action > 0 && action < 256) // shift to some state
         {
-            states.push(action & ~(1 << 8));
+            states.push(action);
             if (token.type == Tag::num)
                 nodes.push(std::make_shared<Node>(token));
-            else
+            else if (token.type != Tag::op)
                 op.push(token);
             token = lexer.NextToken();
         }
-        else if (action) // reduce a handle
+        else if (action > 255) // reduce a handle
         {
-            for (int i = lengthOfRule[action]; i > 0; --i)
+            int indexOfRule = action & ~(1 << 8);
+            for (int i = lengthOfRule[indexOfRule]; i > 0; --i)
                 states.pop();
 
-            switch (action)
+            switch (indexOfRule)
             {
             case 0: case 1:
                 states.push(SLRGotoTable[states.top()][_expr]);
@@ -70,7 +72,7 @@ std::shared_ptr<Node> Parser::Parse()
                 break;
             } 
         }
-        else if (!SLRActionTable[top][indexOfToken])
+        else if (!action)
             return nodes.top();
         else
             throw 4;
@@ -79,7 +81,7 @@ std::shared_ptr<Node> Parser::Parse()
 
 void Parser::SetLine(std::string& l)
 {
-    line = l;
+    lexer.SetLine(l);
 }
 
 int Parser::Convert(const Token& t)

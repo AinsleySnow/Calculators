@@ -64,7 +64,7 @@ if __name__ == '__main__':
     '''
 
     first = FirstSet(nts, nts.GetTermName())
-    follow = FollowSet(nts, first, None)
+    follow = FollowSet(nts, first, '<expr>')
 
     for state in C:
         name = state.name

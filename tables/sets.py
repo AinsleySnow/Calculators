@@ -46,7 +46,7 @@ def FirstSet(nts: NonTerminals, ts: list) -> dict:
                         if '""' in first[rule[-1]]:
                             rhs.add('""')
                 else:
-                    rhs.add('""')
+                    rhs = {'""'}
 
                 first[name] |= rhs
                 

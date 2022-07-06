@@ -44,7 +44,6 @@ LR1_table:
 	python3.9 LR1_table.py;
 
 clean: 
-	rm -f $D/descent
-	rm -f $U/lex.o
-	rm -f $L/LL1
-	rm -f $(LR)/SLR
+	rm -f $D/descent $U/lex.o $U/Node.o     \
+		$L/LL1 $(LR)/SLR $(LR)/LR1	\
+		$G/gcalc $G/y.tab.c $G/lex.yy.c

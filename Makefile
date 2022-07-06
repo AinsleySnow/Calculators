@@ -4,6 +4,7 @@ D = descent
 U = utilities
 L = LL1
 LR = LRx
+G = generated
 
 desc: $U/lex.o
 	$(CC) $(CFLAGS) $U/lex.o $D/Paser.cc $D/main.cc -o $D/descent
@@ -16,6 +17,13 @@ slr: $U/lex.o $U/Node.o
 
 lr1: $U/lex.o $U/Node.o
 	$(CC) $(CFLAGS) -I. $U/lex.o $U/Node.o $(LR)/LR1Table.cc $(LR)/main.cc $(LR)/Parser.cc -o $(LR)/LR1
+
+lexyacc: $G/lex.l $G/yacc.y
+	lex -o $G/lex.yy.c $G/lex.l ; 	
+	yacc -o $G/y.tab.c $G/yacc.y
+
+gcalc: lexyacc
+	gcc $(CFLAGS) $G/y.tab.c -lm -o $G/gcalc
 
 $U/lex.o: 
 	$(CC) $(CFLAGS) $U/Lexer.cc -c -o $U/lex.o

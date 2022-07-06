@@ -7,7 +7,7 @@ int _plus = 4, _minus = 5, _times = 3,
 // how do terminals map to indices: 
 // "%" -> 0; "(" -> 1; ")" -> 2; "*" -> 3; "+" -> 4;
 // "-" -> 5; "/" -> 6; "^" -> 7; eof -> 8; num -> 9;
-int SLRActionTable[21][10] = {
+int actionTable[][10] = {
         { -1, 6, -1, -1, -1, -1, -1, -1, -1, 5, },
         { -1, -1, -1, -1, 7, 8, -1, -1, 0, -1, },
         { 9, -1, 258, 11, 258, 258, 10, -1, 258, -1, },
@@ -33,7 +33,7 @@ int SLRActionTable[21][10] = {
 
 // how do terminals map to indices: 
 // <exponent> -> 0; <expr> -> 1; <factor> -> 2; <term> -> 3;
-int SLRGotoTable[13][4] = {
+int gotoTable[][4] = {
         { 4, 1, 3, 2, },
         { -1, -1, -1, -1, },
         { -1, -1, -1, -1, },

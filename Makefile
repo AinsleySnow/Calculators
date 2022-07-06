@@ -12,10 +12,10 @@ ll: $U/lex.o $U/Node.o
 	$(CC) $(CFLAGS) -I. $U/lex.o $U/Node.o $L/main.cc $L/Parser.cc -o $L/LL1
 
 slr: $U/lex.o $U/Node.o
-	$(CC) $(CFLAGS) -D SLR -I. $U/lex.o $U/Node.o $(LR)/SLRTable.cc $(LR)/main.cc $(LR)/Parser.cc -o $(LR)/SLR
+	$(CC) $(CFLAGS) -I. $U/lex.o $U/Node.o $(LR)/SLRTable.cc $(LR)/main.cc $(LR)/Parser.cc -o $(LR)/SLR
 
 lr1: $U/lex.o $U/Node.o
-	$(CC) $(CFLAGS) -D LR1 -I. $U/lex.o $U/Node.o $(LR)/LR1Table.cc $(LR)/main.cc $(LR)/Parser.cc -o $(LR)/LR1
+	$(CC) $(CFLAGS) -I. $U/lex.o $U/Node.o $(LR)/LR1Table.cc $(LR)/main.cc $(LR)/Parser.cc -o $(LR)/LR1
 
 $U/lex.o: 
 	$(CC) $(CFLAGS) $U/Lexer.cc -c -o $U/lex.o

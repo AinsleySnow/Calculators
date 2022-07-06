@@ -2,17 +2,6 @@
 #include "Table.h"
 #include <stack>
 
-#ifdef SLR
-#define actionTable SLRActionTable
-#define gotoTable SLRGotoTable
-#elif LR1
-#define actionTable LR1ActionTable
-#define gotoTable LR1GotoTable
-#elif LALR
-#define actionTable LALRActionTable
-#define gotoTable LALRGotoTable
-#endif
-
 static int lengthOfRule[11] = {
     3, 3, 1, // expr
     3, 3, 3, 1, // term

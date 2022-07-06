@@ -7,3 +7,6 @@ LL1
 descent
 SLR
 LR1
+gcalc
+lex.yy.c
+y.tab.c

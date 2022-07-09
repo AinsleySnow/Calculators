@@ -3,7 +3,7 @@ from bnf import *
 
 
 class Item0:
-    def __init__(self, name, rule: list, pos) -> None:
+    def __init__(self, name, rule: Rule, pos) -> None:
         self._name = name
         self._rule = rule
         self._pos = pos
@@ -38,6 +38,10 @@ class Item0:
     @property
     def name(self):
         return self._name
+
+    @property
+    def Index(self):
+        return self._rule.Index
 
 
 class LRState:

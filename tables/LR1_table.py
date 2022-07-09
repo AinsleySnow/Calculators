@@ -48,23 +48,6 @@ if __name__ == '__main__':
         print(key, ': ', value, sep=' ')
 
     print()
-    
-    indexTable = [
-        Item0('<expr>', ['<expr>', '"+"', '<term>'], 3),
-        Item0('<expr>', ['<expr>', '"-"', '<term>'], 3),
-        Item0('<expr>', ['<term>',], 1),
 
-        Item0('<term>', ['<term>', '"*"', '<factor>'], 3),
-	    Item0('<term>', ['<term>', '"/"', '<factor>'], 3),
-        Item0('<term>', ['<term>', '"%"', '<factor>'], 3),
-        Item0('<term>', ['<factor>',], 1),
-
-        Item0('<factor>', ['<factor>', '"^"', '<exponent>'], 3),
-	    Item0('<factor>', ['<exponent>',], 1),
-
-        Item0('<exponent>', ['"("', '<expr>', '")"'], 3),
-	    Item0('<exponent>', ['num',], 1)        
-    ]
-
-    print(CStyleTable('LR1ActionTable', actionTable, indexTable))
-    print(CStyleTable('LR1GotoTable', gotoTable))
+    print(CStyleTable('LR1ActionTable', actionTable, True))
+    print(CStyleTable('LR1GotoTable', gotoTable, False))

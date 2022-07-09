@@ -4,19 +4,19 @@ from bnf import *
 from sets import *
 
 
-def CStyleTable(tableName: str, table: dict, indexTable: list = None) -> str:
+def CStyleTable(tableName: str, table: dict, isAction: bool) -> str:
     howToMap = [terminal for terminal, _ in groupby(sorted(table.keys(), key=lambda x: x[1]), lambda x: x[1])]
     maxState = max((state for state, _ in table.keys())) + 1
 
     output = [[-1 for i in range(len(howToMap))] for j in range(maxState)]
-    if indexTable:
+    if isAction:
         for (key, value) in table.items():
             if isinstance(value, int):
                 output[key[0]][howToMap.index(key[1])] = value
             elif value == 'Accept!':
                 output[key[0]][howToMap.index(key[1])] = 0
             else:
-                output[key[0]][howToMap.index(key[1])] = indexTable.index(value) | (1 << 8)
+                output[key[0]][howToMap.index(key[1])] = value.Index | (1 << 8)
     else:
         for (key, value) in table.items():
             output[key[0]][howToMap.index(key[1])] = value
@@ -42,26 +42,7 @@ if __name__ == '__main__':
     C, transition = GetStates(init, nts, '<expr>', closureLR0)
 
     actionTable = dict()
-    gotoTable = dict()
-
-    '''
-    indexTable = [
-        Item0('<expr>', ['<expr>', '"+"', '<term>'], 3),
-        Item0('<expr>', ['<expr>', '"-"', '<term>'], 3),
-        Item0('<expr>', ['<term>',], 1),
-
-        Item0('<term>', ['<term>', '"*"', '<factor>'], 3),
-	    Item0('<term>', ['<term>', '"/"', '<factor>'], 3),
-        Item0('<term>', ['<term>', '"%"', '<factor>'], 3),
-        Item0('<term>', ['<factor>',], 1),
-
-        Item0('<factor>', ['<factor>', '"^"', '<exponent>'], 3),
-	    Item0('<factor>', ['<exponent>',], 1),
-
-        Item0('<exponent>', ['"("', '<expr>', '")"'], 3),
-	    Item0('<exponent>', ['num',], 1)        
-    ]
-    '''
+    gotoTable = dict()   
 
     first = FirstSet(nts, nts.GetTermName())
     follow = FollowSet(nts, first, '<expr>')
@@ -101,5 +82,5 @@ if __name__ == '__main__':
     for key, value in gotoTable.items():
         print(key, ': ', value, sep=' ')
 
-    # print(CStyleTable('SLRActionTable', actionTable, indexTable))
-    # print(CStyleTable('SLRGotoTable', gotoTable))
+    print(CStyleTable('SLRActionTable', actionTable, True))
+    print(CStyleTable('SLRGotoTable', gotoTable, False))

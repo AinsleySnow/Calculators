@@ -1,6 +1,39 @@
 from copy import deepcopy
 import re
 
+class Rule:
+    def __init__(self, i, c) -> None:
+        self.__index = i
+        self.__content = c
+    
+    @property
+    def Index(self):
+        return self.__index
+    
+    def __str__(self) -> str:
+        return str(self.__content)
+
+    def __len__(self) -> int:
+        return len(self.__content)
+    
+    def __getitem__(self, i: int):
+        return self.__content[i]
+
+    def __iter__(self):
+        return (ele for ele in self.__content)
+
+    def __eq__(self, __o: object) -> bool:
+        if not isinstance(__o, Rule):
+            return False
+        return self.Index == __o.Index
+
+    def append(self, ele):
+        self.__content.append(ele)
+
+    def pop(self, i):
+        self.__content.pop(i)
+
+
 class Rules:
     def __init__(self) -> None:
         self.__content = []
@@ -80,6 +113,7 @@ class ParseBNF:
         self.file = open(name, 'r')
         self.line = re.findall('\\S+', self.file.readline())
         self.pos = 0
+        self.__index = 0
         self.fence = len(self.line)
 
     def __del__(self) -> None:
@@ -100,7 +134,11 @@ class ParseBNF:
             start = self.line.index('::=')
         except:
             start = self.line.index('|')
-        return self.line[start + 1:]
+        
+        rule = Rule(self.__index, self.line[start + 1:])
+        self.__index += 1
+        return rule
+        # return self.line[start + 1:]
 
     def __nextNonTerminal(self):
         if not self.line or self.line[0][0] != '<':

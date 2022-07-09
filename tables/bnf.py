@@ -112,9 +112,7 @@ class ParseBNF:
     def __init__(self, name: str) -> None:
         self.file = open(name, 'r')
         self.line = re.findall('\\S+', self.file.readline())
-        self.pos = 0
         self.__index = 0
-        self.fence = len(self.line)
 
     def __del__(self) -> None:
         self.file.close()
@@ -125,7 +123,6 @@ class ParseBNF:
             self.line = None
             return False
         self.line = re.findall('\\S+', line)
-        self.fence = len(self.line)
         return True
         
     def __nextRule(self):
@@ -138,7 +135,6 @@ class ParseBNF:
         rule = Rule(self.__index, self.line[start + 1:])
         self.__index += 1
         return rule
-        # return self.line[start + 1:]
 
     def __nextNonTerminal(self):
         if not self.line or self.line[0][0] != '<':

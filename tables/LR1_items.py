@@ -13,8 +13,6 @@ class Item1(Item0):
     def __eq__(self, __o: object) -> bool:
         if isinstance(__o, Item1):
             return super().__eq__(__o) and self.__lookahead == __o.lookahead
-        elif isinstance(__o, Item0):
-            return super().__eq__(__o) 
         return False
 
     @property

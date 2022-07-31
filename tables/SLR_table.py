@@ -26,7 +26,7 @@ def CStyleTable(tableName: str, table: dict, isAction: bool) -> str:
         output[i] = '\t{ %s},\n' % output[i]
     output = ''.join(output)
 
-    output = '// {}\nint {}[{}][{}] = {{\n{}}};'.format(
+    output = '// {}\nstatic const int {}[{}][{}] = {{\n{}}};'.format(
         'how do terminals map to indices: %s' % ''.join(('%s -> %d; ' % (howToMap[i], i) for i in range(len(howToMap)))),\
         tableName, maxState, len(howToMap), output
     )

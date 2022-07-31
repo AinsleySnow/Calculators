@@ -53,8 +53,8 @@ def closureLR1(items: LRState, nts: NonTerminals):
                 for rule in nts[name]:
                     remain = item.GetThingsRightofDot()
                     remain.append(item.lookahead)
-                    firstSetOfRemaining = FastFirstSet(remain, first)
-                    for terminal in firstSetOfRemaining:
+                    firstSetOfRemains = FastFirstSet(remain, first)
+                    for terminal in firstSetOfRemains:
                         items += Item1(name, rule, 0, terminal)
 
 

@@ -23,7 +23,9 @@ class Rule:
         return (ele for ele in self.__content)
 
     def __eq__(self, __o: object) -> bool:
-        if not isinstance(__o, Rule):
+        if isinstance(__o, list):
+            return self.__content == __o
+        elif not isinstance(__o, Rule):
             return False
         return self.Index == __o.Index
 
